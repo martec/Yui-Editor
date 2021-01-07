@@ -20,7 +20,7 @@ if(!defined("IN_MYBB"))
 	die("Direct initialization of this file is not allowed.<br /><br />Please make sure IN_MYBB is defined.");
 }
 
-define('YE', '1.0.0');
+define('YE', '1.0.1');
 
 // Plugin info
 function yuieditor_info ()
@@ -58,8 +58,8 @@ function yuieditor_install()
 
 	$lang->load('config_yuieditor');
 	
-	$query	= $db->simple_select("settinggroups", "COUNT(*) as rows");
-	$dorder = $db->fetch_field($query, 'rows') + 1;
+	$query	= $db->simple_select("settinggroups", "COUNT(*) as counts");
+	$dorder = $db->fetch_field($query, 'counts') + 1;
 
 	$groupid = $db->insert_query('settinggroups', array(
 		'name'		=> 'yuieditor',
@@ -187,10 +187,10 @@ function yuieditor_is_installed()
 {
 	global $db;
 
-	$query = $db->simple_select("settinggroups", "COUNT(*) as rows", "name = 'yuieditor'");
-	$rows  = $db->fetch_field($query, 'rows');
+	$query = $db->simple_select("settinggroups", "COUNT(*) as counts", "name = 'yuieditor'");
+	$counts  = $db->fetch_field($query, 'counts');
 
-	return ($rows > 0);
+	return ($counts > 0);
 }
 
 function yuieditor_uninstall()
